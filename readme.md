@@ -75,12 +75,18 @@ The system analyzes customer queries, determines the intent, and generates appro
    python app.py
    ```
 
+
 ## Usage
 
 1. Ensure both frontend and backend servers are running.
 2. Open a web browser and navigate to the address provided by the frontend development server (typically `http://localhost:3000`).
-3. Input your query in text format or upload an audio file.
-4. The system will process your input, classify the intent, and generate an appropriate response.
+3. **Text Input:**
+- Enter your query in the prompts box and click on "Ask AI".
+- Wait for the response to be generated.
+4. **Audio Input:**
+- Click on the record button, record your voice query.
+- Click on the stop button and then save the recording.
+- Be patient as it takes time to generate the response.
 
 ## Architecture
 
@@ -108,3 +114,15 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 - BERT model: [https://github.com/google-research/bert](https://github.com/google-research/bert)
 - GPT-2 model: [https://github.com/openai/gpt-2](https://github.com/openai/gpt-2)
+
+
+
+
+
+# add more instaruction
+for text input 
+write the input in enter your prompts box , click on ask ai , then wait ,response will be generated
+
+for audio
+click record button, record voice, click on stop button and click on save recording
+be paitent as it takes much time to respond the answer

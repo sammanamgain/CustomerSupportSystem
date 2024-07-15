@@ -43,6 +43,16 @@ const Chat: React.FC = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+  /**
+   * Handles the form submission event for sending a message.
+   * Sends a POST request to the backend API to send the message.
+   * If the message is not empty, adds the message to the messages state array.
+   * Clears the new message input field.
+   * Scrolls to the bottom of the messages container.
+   * If the audio response flag is set, converts the response message to audio.
+   *
+   * @param {React.FormEvent<HTMLFormElement>} event - The form submission event.
+   */
   const handleSendMessage = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.currentTarget;
@@ -50,19 +60,26 @@ const Chat: React.FC = () => {
     const query = data.get('query') as string;
 
     if (query.trim()) {
+     
       const userId = "exampleUserId"; 
-      // Replace with actual user ID
-  
+
+      // Send message to backend API
       axios.post("http://192.168.1.94:5000/api/send-message", { user_id: userId, message: query, paramValue })
         .then(response => {
+          // Add user message and bot response to messages state array
           setMessages(prevMessages => [
             ...prevMessages,
             { sender: "user", message: query, timestamp: new Date() },
             { sender: "bot", message: response.data.message, timestamp: new Date() }
           ]);
+
+          // Clear new message input field
           setNewMessage("");
+
+          // Scroll to bottom of messages container
           scrollToBottom();
 
+          // If audio response flag is set, convert response message to audio
           if (isAudioResponse) {
             convertTextToAudio(response.data.message);
           }
@@ -71,6 +88,11 @@ const Chat: React.FC = () => {
     }
   };
 
+/**
+ * Handles the start of audio recording.
+ *
+ * @return {void} No return value.
+ */
   const handleStartRecording = () => {
     navigator.mediaDevices.getUserMedia({ audio: true })
       .then(stream => {
@@ -100,6 +122,15 @@ const Chat: React.FC = () => {
     setIsRecording(false);
   };
 
+  /**
+   * Handles saving the recorded audio.
+   * Sends a POST request to the backend API to upload the audio file.
+   * If the audio file is successfully uploaded, sends a message to the backend API
+   * and updates the messages state.
+   * Also converts the response message to audio.
+   *
+   * @return {void} No return value.
+   */
   const handleSaveRecording = () => {
     setIsAudioResponse(true);
 
@@ -108,22 +139,27 @@ const Chat: React.FC = () => {
       const formData = new FormData();
       formData.append('audio', audioBlob, 'recording.wav');
 
+      // Send audio file to backend API
       axios.post('http://192.168.1.94:5000/api/upload-audio', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       })
       .then(response => {
+        // Send message to backend API
         axios.post("http://192.168.1.94:5000/api/send-message", { user_id: userId, message: response.data.message, paramValue })
           .then(response1 => {
+            // Update messages state
             setMessages(prevMessages => [
               ...prevMessages,
               { sender: "user", message: response.data.message, timestamp: new Date() },
               { sender: "bot", message: response1.data.message, timestamp: new Date() }
             ]);
+
             setNewMessage("");
             scrollToBottom();
 
+            // Convert response message to audio
             convertTextToAudio(response1.data.message);
           })
           .catch(error => console.error("Error sending message:", error));
@@ -145,7 +181,7 @@ const Chat: React.FC = () => {
     <div>
       <nav className="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-          <a href="https://flowbite.com/" className="flex items-center space-x-3 rtl:space-x-reverse">
+          <a href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
             <img src="https://flowbite.com/docs/images/logo.svg" className="h-8" alt="Flowbite Logo" />
             <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">customer care</span>
           </a>
