@@ -10,6 +10,7 @@ This project aims to automate the customer support process using advanced natura
 - Response generation using GPT-2 (Generative Pre-trained Transformer 2)
 - Support for both text and audio input formats
 - Seamless integration of frontend and backend components
+- store the converstation history in mongodb database To maintain context across multiple interactions,
 
 The system analyzes customer queries, determines the intent, and generates appropriate responses, enhancing the efficiency and accuracy of customer support interactions.
 
