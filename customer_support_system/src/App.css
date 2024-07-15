@@ -1,0 +1,27 @@
+/* CustomerCare.css */
+
+.heading {
+  margin-top: 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.grid {
+  margin-top: 2rem;
+}
+
+.grid > div {
+  background: linear-gradient(to right, #f1f2b5, #135058);
+  height: 6rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 24px;
+}
+
+.grid > div > h1 {
+  font-size: 24px;
+}

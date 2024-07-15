@@ -1,0 +1,9 @@
+flask
+pymongo[srv]
+Flask-PyMongo
+torch
+pandas
+
+transformers
+scikit-learn
+assemblyai
